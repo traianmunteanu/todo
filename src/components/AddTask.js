@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 
 export default function AddTask(props) {
   return (
-    <div className="input-group mt-5 mb-3">
+    <div className="input-group">
       <TextField
         id="outlined-full-width"
         label="Add a task"

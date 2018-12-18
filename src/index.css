@@ -23,7 +23,7 @@ code {
   background-image: linear-gradient(-170deg, #e25781 0%, #fde55e 100%);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.22);
   width: 700px;
-  min-height: 400px;
+  min-height: 700px;
   height: 100%;
   margin: 0, auto;
   position: relative;
@@ -37,10 +37,10 @@ code {
   position: relative;
   top: 18px;
   padding: 17px;
-  border-bottom: 1px solid ;
+  border-bottom: 1px solid;
 }
 
-#todo-list {
+.todo-list {
   list-style-type: none;
   margin-top: 40px;
   position: relative;
@@ -50,12 +50,34 @@ code {
 }
 
 .todo-item {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.20);
-  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0);
   padding: 15px 15px;
   font-size: 1.6rem;
-  color: rgb(88, 88, 88);
+  color: rgb(47, 47, 47);
   font-weight: 100;
+}
+
+.order-enter {
+  opacity: 0;
+  width: 400px;
+  transform: translate(-100%);
+}
+
+.order-enter.order-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: 250ms ease-in-out;
+}
+
+.order-exit {
+  transition: 0.5s;
+  transform: translateX(0);
+}
+.order-exit.order-exit-active {
+  transform: translateX(120%);
+  opacity: 0;
+  width: 400px;
 }
 
 button[aria-label="Close"] {
@@ -68,3 +90,4 @@ button[aria-label="Close"] {
   margin-left: 12px;
   position: relative;
 }
+
