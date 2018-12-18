@@ -1,0 +1,111 @@
+.custom-control {
+  &.material-checkbox {
+    --color: #26a69a;
+
+    .material-control-input {
+      display: none;
+      &:checked ~ .material-control-indicator {
+        border-color: var(--color);
+        transform: rotateZ(45deg) translate(1px, -5px);
+        width: 10px;
+        border-top: 0px solid #fff;
+        border-left: 0px solid #fff;
+      }
+    }
+    .material-control-indicator {
+      display: inline-block;
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #aaa;
+      transition: 0.3s;
+    }
+  }
+
+  &.fill-checkbox {
+    --color: #26a69a;
+
+    .fill-control-input {
+      display: none;
+      &:checked ~ .fill-control-indicator {
+        background-color: var(--color);
+        border-color: var(--color);
+        background-size: 80%;
+      }
+    }
+    .fill-control-indicator {
+      border-radius: 5px;
+      display: inline-block;
+      position: absolute;
+      top: 4px;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #aaa;
+      transition: 0.3s;
+      background: transperent;
+      background-size: 0%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+    }
+  }
+}
+
+.list-group {
+  &:first-child .list-group-control:first-child {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+
+  &::last-child .list-group-control:last-child {
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  &.list-group-flush {
+    &:last-child {
+      .list-group-control:last-child {
+        border-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    &:first-child {
+      .list-group-control:first-child {
+        border-top: 0;
+      }
+    }
+
+    .list-group-control {
+      border-right: 0;
+      border-left: 0;
+      border-radius: 0;
+    }
+  }
+
+  .list-group-control {
+    position: relative;
+    display: block;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    .custom-control {
+      margin: 0;
+      padding: 0.75rem 1.25rem;
+      padding-left: 3rem;
+      display: block;
+
+      .custom-control-indicator,
+      .material-control-indicator,
+      .fill-control-indicator,
+      .overflow-control-indicator {
+        top: 1rem;
+        left: 1.25rem;
+      }
+    }
+  }
+}
