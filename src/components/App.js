@@ -1,38 +1,75 @@
 
-import React from 'react';
-import moment from 'moment';
+import React from 'react'
+import moment from 'moment'
 import TaskList from './TaskList'
 import AddTask from './AddTask'
+import Registration from './Registration'
+import firebase from 'firebase'
+import base, { firebaseApp } from '../base'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       tasks: [
-        {
-          name: 'Buy Groceries',
-          done: false
-        },
-        {
-          name: 'Take the dog out',
-          done: false
-        },
-        {
-          name: 'Code a todo list',
-          done: false
-        },
-        {
-          name: 'Learn to fly',
-          done: false
-        },
       ],
-      input: ''
+      input: '',
+      loggedIn: false,
+      uid: null,
+      owner: null,
+
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  componentDidMount() {
+    this.ref = base.syncState('tasks', {
+      context: this,
+      state: 'tasks',
+      asArray: true
+    })
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.authHandler({ user });
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
+  authHandler = async (authData) => {
+    const store = await base.fetch('tasks', { context: this });
+    if (!store.owner) {
+      await base.post(`tasks/owner`, {
+        data: authData.user.uid
+      })
+    }
+    this.setState({
+      uid: authData.user.uid,
+      owner: store.owner || authData.user.uid,
+      loggedIn: true
+    })
+  }
+
+  authenticate = (provider) => {
+    firebaseApp
+      .auth()
+      .signInWithEmailAndPassword()
+      .then(this.authHandler);
+  }
+
+  logout = async () => {
+    console.log('logging out!');
+    await firebase.auth().signOut();
+    this.setState({
+      uid: null,
+    })
   }
 
   handleChange(e) {
@@ -90,7 +127,11 @@ class App extends React.Component {
     })
   }
 
+
   render() {
+    if(!this.state.loggedIn) {
+      return <Registration isLoggedIn={this.state.loggedIn} />
+    }
     return (
       <div className="container" id="todo">
         <h1>{moment().format('dddd, MMM Do YYYY')}</h1>
